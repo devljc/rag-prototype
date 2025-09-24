@@ -1,0 +1,44 @@
+# infra/compose/docker-compose.vllm.yml
+x-vllm-cmd-cpu: &vllm_cmd_cpu
+  - --model
+  - TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  - --served-model-name
+  - tinyllama_1b
+  - --host
+  - 0.0.0.0
+  - --port
+  - "8000"
+  - --device
+  - cpu               # ★ vLLM 0.6.x에서는 CPU 모드 지원
+  - --dtype
+  - float32
+  - --max-model-len
+  - "2048"
+  - --tensor-parallel-size
+  - "1"
+
+services:
+  vllm1:
+    platform: linux/amd64              # ★ M-시리즈 맥이면 필요(에뮬)
+    image: vllm/vllm-openai:latest
+    container_name: vllm-tinyllama-1
+    restart: unless-stopped
+    environment:
+      - HF_HOME=/root/.cache/huggingface
+      - VLLM_LOGGING_LEVEL=DEBUG
+      - VLLM_NO_USAGE_STATS=1
+      - CUDA_VISIBLE_DEVICES=          # ★ GPU 경로 완전 차단
+      - OMP_NUM_THREADS=1
+      - OPENBLAS_NUM_THREADS=1
+      - MKL_NUM_THREADS=1
+      - NUMEXPR_NUM_THREADS=1
+    volumes:
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+    expose:
+      - "8000"
+    command: *vllm_cmd_cpu
+    networks: [ragnet]
+
+networks:
+  ragnet:
+    name: ragnet

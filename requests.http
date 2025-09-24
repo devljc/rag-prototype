@@ -1,0 +1,22 @@
+### health
+GET http://127.0.0.1:8000/health
+
+### non-stream query
+POST http://127.0.0.1:8000/query
+Content-Type: application/json
+
+{
+  "question": "환불은 며칠 내 가능해?"
+}
+
+### stream (SSE) — 터미널에선 curl 예시 사용 권장
+# VS Code REST Client에서 SSE는 가끔 미지원일 수 있음
+POST http://127.0.0.1:8000/stream
+Content-Type: application/json
+
+{
+  "question": "반품 절차를 단계별로 알려줘"
+}
+
+### index 상태 확인 (없으면 아래 ‘디버그 엔드포인트 추가’ 참고)
+GET http://127.0.0.1:8000/debug/index_count

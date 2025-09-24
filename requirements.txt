@@ -1,0 +1,38 @@
+# FastAPI + 서버
+fastapi==0.115.0
+uvicorn==0.30.6
+python-dotenv==1.0.1
+sse-starlette==2.1.3
+pydantic==2.9.2
+
+# OpenAI 호환 클라이언트 + HTTP
+# langchain-openai 0.2.3는 openai>=1.52.0 요구 → 1.52.2로 고정
+openai==1.52.2
+httpx==0.27.2
+PyYAML==6.0.2
+
+# LangChain + Chroma (2025-09 기준 안정 조합)
+langchain==0.3.7
+langchain-community==0.3.7
+langchain-text-splitters==0.3.2
+langchain-chroma==0.1.4
+chromadb==0.5.7
+
+# 임베딩 + HuggingFace
+langchain-huggingface==0.1.0
+sentence-transformers==2.7.0
+transformers==4.45.2
+torch==2.5.1         # macOS(MPS)/CPU 모두 원활, 2.4.0 대비 호환성 ↑
+accelerate==0.34.2
+safetensors==0.4.4
+
+# PDF
+pypdf==4.3.1
+
+# 캐시
+redis==5.0.7
+
+# (선택) vLLM 클라이언트로만 쓰고 싶다면 openai 호환 API에 붙이기 때문에 별도 패키지 불필요
+# vLLM 서버 자체는 Docker/별도 프로세스로 운영 권장
+langchain-core~=0.3.63
+langchain-openai~=0.2.3

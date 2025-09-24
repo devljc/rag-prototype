@@ -1,0 +1,10 @@
+networks:
+  ragnet:
+    name: ragnet
+
+services:
+  redis:
+    extends:
+      file: ./infra/compose/docker-compose.redis.yml
+      service: redis
+    networks: [ragnet]
