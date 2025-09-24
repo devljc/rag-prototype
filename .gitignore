@@ -142,3 +142,5 @@ cython_debug/
 # data/index
 data/
 index/
+
+*.iml
